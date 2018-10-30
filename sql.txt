@@ -1,0 +1,18 @@
+create table board_tbl(
+    -> idx int(6) not null auto_increment,
+    -> writer varchar(20),
+    -> subject varchar(255),
+    -> content text,
+    -> date datetime,
+    -> primary key(idx));
+
+insert into board_tbl(idx,writer,subject,content,date) values (1,'김회원','정보처리 산업기사 쉽다','jsp 쉽네요', '2018-07-31 12:34:56');
+insert into board_tbl(idx,writer,subject,content,date) values (2,'김회원','웹 디자인 기능사 어렵다','jquery 어렵네요', '2018-07-31 12:43:43');
+insert into board_tbl(idx,writer,subject,content,date) values (3,'이회원','정보처리 산업기사 어렵다','jsp 어렵네요', '2018-08-01 13:34:56');
+insert into board_tbl(idx,writer,subject,content,date) values (4,'이회원','정보처리 산업기사 쉽다','jquery 쉽네요', '2018-08-01 12:43:34');
+insert into board_tbl(idx,writer,subject,content,date) values (5,'박회원','ㅈㄱㄴ','제목 그대로 내용', '2018-08-02 13:12:10');
+insert into board_tbl(idx,writer,subject,content,date) values (6,'박회원','제목 그대로 내용', 'ㅈㄱㄴ', '2018-08-03 14:34:20');
+insert into board_tbl(idx,writer,subject,content,date) values (7,'강회원','하드코딩하는 사람들','가입하면 좋음', '2018-08-04 14:56:30');
+insert into board_tbl(idx,writer,subject,content,date) values (8,'나회원','github를 사용합시다','신세계', '2018-08-05 15:43:35');
+insert into board_tbl(idx,writer,subject,content,date) values (9,'문회원','노는게 제일좋아','모두들 모여라', '2018-08-06 16:21:40');
+insert into board_tbl(idx,writer,subject,content,date) values (10,'지회원','여름아','부탁해', '2018-08-07 17:01:45');
