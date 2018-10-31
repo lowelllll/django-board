@@ -1,0 +1,22 @@
+{% extends 'layout.html' %}
+{% block content %}
+    <article>
+        <p>총 {{ count }}개의 게시물이 있습니다.</p>
+        <table>
+            <tr>
+                <th>번호</th>
+                <th>글쓴이</th>
+                <th>제목</th>
+                <th>날짜</th>
+            </tr>
+            {% for post in posts %}
+                <tr>
+                    <td>{{ post.idx }}</td>
+                    <td>{{ post.last_name }}{{ post.first_name }}</td>
+                    <td><a href="{% url 'post:post_detail' post.idx %}">{{ post.subject }}</a></td>
+                    <td>{{ post.date }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </article>
+{% endblock %}

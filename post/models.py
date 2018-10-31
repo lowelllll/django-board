@@ -9,9 +9,11 @@ from __future__ import unicode_literals
 
 from django.db import models
 
+
+
 class BoardTbl(models.Model):
     idx = models.AutoField(primary_key=True)
-    writer = models.CharField(max_length=20, blank=True, null=True)
+    writer = models.IntegerField(blank=True, null=True)
     subject = models.CharField(max_length=255, blank=True, null=True)
     content = models.TextField(blank=True, null=True)
     date = models.DateTimeField(blank=True, null=True)
@@ -19,4 +21,16 @@ class BoardTbl(models.Model):
     class Meta:
         managed = False
         db_table = 'board_tbl'
+
+
+class CommentTbl(models.Model):
+    idx = models.AutoField(primary_key=True)
+    bidx = models.IntegerField(blank=True, null=True)
+    writer = models.IntegerField(blank=True, null=True)
+    content = models.TextField(blank=True, null=True)
+    date = models.DateTimeField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'comment_tbl'
 
