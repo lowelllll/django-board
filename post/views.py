@@ -7,7 +7,7 @@ from .forms import PostForm, CommentForm
 from .models import BoardTbl, CommentTbl
 
 def index(request):
-    posts = BoardTbl.objects.raw(
+    posts = BoardTbl.objects.raw( # ORM 미사용
         'SELECT b.idx, u.last_name, u.first_name, b.subject, b.content, b.date '
         'FROM board_tbl b '
         'JOIN auth_user u '
@@ -42,11 +42,12 @@ def post_detail(request,id):
 def post_new(request):
     if request.method == 'POST':
         form = PostForm(request.POST)
-        if form.is_valid():
-            post = form.save(commit=False) # ORM 사용
+        if form.is_valid(): # ORM 사용
+            post = form.save(commit=False)
             post.writer = request.user.id
             post.date = timezone.localtime()
             post.save()
+            messages.success(request, '게시글이 작성되었습니다.')
             return redirect('post:index')
     else:
         form = PostForm()
@@ -63,6 +64,7 @@ def post_edit(request, id):
             form = PostForm(request.POST, instance=post)
             if form.is_valid():
                 form.save() # 작성자와 게시글과 작성일은 그대로 나둠
+                messages.success(request, '게시글이 수정되었습니다.')
         else:
             form = PostForm(instance=post)
             return render(request, 'post/form.html', {'form':form})
@@ -72,15 +74,19 @@ def post_edit(request, id):
 @login_required
 def post_delete(request):
     if request.method == 'POST':
-        id = request.POST['idx']
-        post = get_object_or_404(BoardTbl, idx=id)
+        idx = request.POST['idx']
+        post = get_object_or_404(BoardTbl, idx=idx)
         if post.writer != request.user.id:
             messages.error(request, '게시물 삭제은 해당 작성자만 가능합니다.')
         else:
+            comments = CommentTbl.objects.filter(bidx=idx)
             post.delete()
+            comments.delete() # CASCADE
+            messages.success(request, '게시물이 삭제되었습니다.')
     return redirect('post:index')
 
 
+@login_required
 def comment_new(request, bidx):
     if request.method == 'POST':
         form = CommentForm(request.POST)
@@ -96,7 +102,16 @@ def comment_new(request, bidx):
     return redirect('post:post_detail',id=bidx)
 
 
-
+@login_required
 def comment_delete(request):
-    pass
+    if request.method == 'POST':
+        idx = request.POST['idx']
+        bidx = request.POST['bidx']
+        comment = get_object_or_404(CommentTbl, idx=idx)
+        if comment.writer != request.user.id:
+            messages.error(request, '댓글 삭제은 해당 작성자만 가능합니다.')
+        else:
+            comment.delete()
+            messages.success(request, '댓글이 삭제되었습니다.')
+    return redirect('post:post_detail', id=bidx)
 

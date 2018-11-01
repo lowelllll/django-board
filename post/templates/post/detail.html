@@ -1,34 +1,37 @@
 {% extends 'layout.html' %}
+{% load static %}
+{% block style %}{% static 'css/detail.css' %}{% endblock %}
 {% block content %}
     <article>
         <h2>게시물 조회</h2>
-        <ul>
-            <li>제목 : {{ post.subject }}</li>
-            <li>작성자 : {{ post.last_name }}{{ post.first_name }}</li>
-            <li>작성일 : {{ post.date }}</li>
-            {% if request.user.id == post.writer %}
-                <li>
-                    <form action="{% url 'post:post_delete' %}" method="post">
-                        {% csrf_token %}
-                        <input type="hidden" name="idx" value="{{ post.idx }}"></input>
-                        <input type="submit" value="삭제" >
-                    </form>
-                </li>
-                <li>
-                    <a href="{% url 'post:post_update' post.idx %}">수정</a>
-                </li>
-            {% endif %}
-        </ul>
-        <pre>
-         {{ post.content }}
-        </pre>
+        <table>
+            <tr>
+                <td style="font-size:25px;">제목 : {{ post.subject }}</td>
+            </tr>
+            <tr>
+                <td>작성자 :{{ post.last_name }}{{ post.first_name }}</td>
+                <td>작성일 : {{ post.date|date:'Y-m-d H:i' }}</td>
+            </tr>
+        </table>
+        <pre>{{ post.content }}</pre>
         <hr>
 
         <h4>댓글</h4>
         <ul class="comment">
             {% for comment in comments %}
-                <li>{{ comment.last_name }}{{ comment.first_name }} | {{ comment.content }} | {{ comment.date }} |
-                    삭제</li>
+                <li>
+                    {{ comment.last_name }}{{ comment.first_name }} &nbsp;/
+                    {{ comment.content }}&nbsp; /
+                    {{ comment.date|date:'Y-m-d H:i' }} &nbsp;
+                    {% if comment.writer == request.user.id %} /
+                        <form action="{% url 'post:comment_delete' %}" method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="idx" value="{{ comment.idx }}">
+                            <input type="hidden" name="bidx" value="{{ post.idx }}">
+                            <button type="submt" class="btn-small" >삭제</button>
+                        </form>
+                    {% endif %}
+                </li>
             {% endfor %}
         </ul>
 
@@ -36,38 +39,29 @@
             <hr>
             <h4>댓글 작성</h4>
             <div>
-                <form action="{% url 'post:comment_create' post.idx %}" method="POST">
+                <form action="{% url 'post:comment_create' post.idx %}" method="POST" id="delete-form">
                     {% csrf_token %}
                     {% for field in form.visible_fields %}
                         {{ field }}
                     {% endfor %}
-                    <input type="submit" value="댓글작성">
+                    <button class="btn custom-btn">댓글 작성</button>
                 </form>
+            </div>
+            <div class="btns">
+                {% if request.user.id == post.writer %}
+                    <a href="{% url 'post:index' %}">
+                        <button class="btn">목록</button>
+                    </a>
+                    <form action="{% url 'post:post_delete' %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="idx" value="{{ post.idx }}"></input>
+                        <button class="btn">삭제</button>
+                    </form>
+                    <a href="{% url 'post:post_update' post.idx %}">
+                        <button class="btn">수정</button>
+                    </a>
+                {% endif %}
             </div>
         {% endif %}
     </article>
-{% endblock %}
-
-{% block script %}
-{#    $('#comment-create-btn').on('click', function(){#}
-{#    var value = $('#comment_value').val();#}
-{#    $.ajax({#}
-{#        type: 'POST',#}
-{#        url: "{% url 'post:comment_create' %}",#}
-{#        data: {#}
-{#            'context':value,#}
-{#            'csrfmiddlewaretoken': '{{ csrf_token }}',#}
-{#        },#}
-{#        dataType:'json',#}
-{#        success:function(response){#}
-{#            if(response.result == 'success'){#}
-{#                data = response.data;#}
-{#                alert('댓글이 저장되었습니다.');#}
-{#                $(".comment").append(`<li>${data.writer} | ${data.content} | ${data.date}</li>`);#}
-{#            }else{#}
-{#                alert('댓글 저장에 실패했습니다.');#}
-{#            }#}
-{#        }#}
-{#    });#}
-{#});#}
 {% endblock %}

@@ -1,0 +1,41 @@
+article {
+    width:100%;
+}
+
+table {
+    width:100%;
+    text-align:center;
+}
+
+tr, td, th {
+    padding:10px;
+}
+
+
+td:nth-child(3){
+    text-align:left;
+}
+
+tr{
+    border-bottom:1px solid #eee;
+}
+
+tr:first-child {
+    border-top: 1px solid #eee;
+    background-color:#eee;
+}
+
+.post-create {
+    padding:20px;
+    text-align:right;
+}
+
+tr:hover{
+    box-shadow: 5px 5px 10px #eee;
+    transition: 0.3s;
+}
+
+tr:first-child:hover{
+    box-shadow: none;
+}
+

@@ -1,4 +1,6 @@
 {% extends 'layout.html' %}
+{% load staticfiles %}
+{% block style %}{% static 'css/index.css' %}{% endblock %}
 {% block content %}
     <article>
         <p>총 {{ count }}개의 게시물이 있습니다.</p>
@@ -14,9 +16,16 @@
                     <td>{{ post.idx }}</td>
                     <td>{{ post.last_name }}{{ post.first_name }}</td>
                     <td><a href="{% url 'post:post_detail' post.idx %}">{{ post.subject }}</a></td>
-                    <td>{{ post.date }}</td>
+                    <td>{{ post.date|date:'Y-m-d H:i' }}</td>
                 </tr>
             {% endfor %}
         </table>
+         {% if user.is_authenticated %}
+            <p class="post-create">
+                <a href="{% url 'post:post_create' %}">
+                    <button class="btn">글 작성</button>
+                </a>
+            </p>
+        {% endif %}
     </article>
 {% endblock %}

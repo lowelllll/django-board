@@ -1,0 +1,40 @@
+article {
+    width:70%;
+    margin:0 auto;
+}
+
+h2 {
+    font-size:20px;
+    text-align:center;
+}
+
+form {
+    width:100%;
+    padding-top:30px;
+}
+
+table {
+    width:100%;
+}
+
+td:first-child{
+    width:15%;
+}
+
+input {
+    height:40px;
+    border:1px solid #ddd;
+}
+
+input, textarea {
+    width:100%;
+}
+
+tr, td, th{
+    padding:10px;
+}
+
+textarea {
+    resize:none;
+    border:1px solid #ddd;
+}

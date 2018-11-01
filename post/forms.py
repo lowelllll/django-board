@@ -20,5 +20,5 @@ class CommentForm(forms.ModelForm):
             'content' : '내용'
         }
         widgets = {
-            'content' : forms.TextInput,
+            'content' : forms.TextInput(),
         }

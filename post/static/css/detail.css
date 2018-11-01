@@ -1,0 +1,56 @@
+article {
+    width: 100%;
+}
+
+h2 {
+    font-size: 20px;
+    text-align: center;
+}
+
+table {
+    padding-top: 20px;
+}
+
+tr, td, th{
+    padding: 10px;
+    padding-left: 0px;
+}
+
+pre {
+    margin-top: 30px;
+    font-size: 17px;
+    font-family: 'NanumSquare', sans-serif;
+
+}
+
+h4{
+    font-size:20px;
+}
+
+ul {
+    list-style: none;
+}
+
+form{
+    display: inline-block;
+}
+
+#delete-form{
+    width: 100%;
+    margin-top: 10px;
+}
+
+#delete-form input{
+    width: 90%;
+    height: 50px;
+}
+
+.custom-btn{
+    width:80px;
+    height:40px;
+}
+
+.btns{
+    text-align: right;
+    margin-top:30px;
+}

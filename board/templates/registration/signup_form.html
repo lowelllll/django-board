@@ -1,0 +1,30 @@
+{% extends '../layout.html' %}
+{% load static %}
+{% block style %}{% static 'auth.css' %}{% endblock %}
+{% block content %}
+    <article>
+        <form action="" method="post">
+            <h3>회원가입</h3>
+            {% csrf_token %}
+            <table>
+                {% for field in form.visible_fields %}
+                    <tr>
+                        <th>{{ field.label }}</th>
+                        <td>{{ field }}</td>
+                    </tr>
+                    {% if field.errors %}
+                        {% for error in field.errors %}
+                            <div class="alert alert-danger">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endfor %}
+                <tr>
+                    <th></th>
+                    <td> <input type="submit" value="로그인"></td>
+                </tr>
+            </table>
+        </form>
+    </article>
+{% endblock %}

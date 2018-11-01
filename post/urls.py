@@ -9,4 +9,5 @@ urlpatterns = [
     url(r'^post/update/(?P<id>\d+)/$', views.post_edit, name='post_update'),
 
     url(r'^comment/new/(?P<bidx>\d+)/$', views.comment_new, name='comment_create'),
+    url(r'^comment/delete/$', views.comment_delete, name='comment_delete'),
 ]
